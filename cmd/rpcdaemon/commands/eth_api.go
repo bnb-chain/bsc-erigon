@@ -231,15 +231,19 @@ type APIImpl struct {
 	mining     txpool.MiningClient
 	db         kv.RoDB
 	GasCap     uint64
+
+	allowUnprotectedTxs bool // allows only for EIP155 transactions.
 }
 
 // NewEthAPI returns APIImpl instance
-func NewEthAPI(base *BaseAPI, db kv.RoDB, eth services.ApiBackend, txPool txpool.TxpoolClient, mining txpool.MiningClient, gascap uint64) *APIImpl {
+func NewEthAPI(base *BaseAPI, db kv.RoDB, eth services.ApiBackend,
+	txPool txpool.TxpoolClient, mining txpool.MiningClient, gascap uint64,
+	options ...EthAPIOption) *APIImpl {
 	if gascap == 0 {
 		gascap = uint64(math.MaxUint64 / 2)
 	}
 
-	return &APIImpl{
+	apiImpl := &APIImpl{
 		BaseAPI:    base,
 		db:         db,
 		ethBackend: eth,
@@ -247,6 +251,14 @@ func NewEthAPI(base *BaseAPI, db kv.RoDB, eth services.ApiBackend, txPool txpool
 		mining:     mining,
 		GasCap:     gascap,
 	}
+
+	for _, option := range options {
+		if option != nil {
+			option.Apply(apiImpl)
+		}
+	}
+
+	return apiImpl
 }
 
 // RPCTransaction represents a transaction that will serialize to the RPC representation of a transaction

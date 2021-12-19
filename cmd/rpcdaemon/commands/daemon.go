@@ -25,7 +25,7 @@ func APIList(ctx context.Context, db kv.RoDB,
 	if cfg.TevmEnabled {
 		base.EnableTevmExperiment()
 	}
-	ethImpl := NewEthAPI(base, db, eth, txPool, mining, cfg.Gascap)
+	ethImpl := NewEthAPI(base, db, eth, txPool, mining, cfg.Gascap, SetAllowUnprotectedTxs(cfg.AllowUnprotectedTxs))
 	erigonImpl := NewErigonAPI(base, db, eth)
 	starknetImpl := NewStarknetAPI(base, db, txPool)
 	txpoolImpl := NewTxPoolAPI(base, db, txPool)

@@ -70,6 +70,7 @@ type Flags struct {
 	GRPCListenAddress      string
 	GRPCPort               int
 	GRPCHealthCheckEnabled bool
+	AllowUnprotectedTxs    bool
 }
 
 var rootCmd = &cobra.Command{
@@ -108,6 +109,7 @@ func RootCommand() (*cobra.Command, *Flags) {
 	rootCmd.PersistentFlags().StringVar(&cfg.GRPCListenAddress, "grpc.addr", node.DefaultGRPCHost, "GRPC server listening interface")
 	rootCmd.PersistentFlags().IntVar(&cfg.GRPCPort, "grpc.port", node.DefaultGRPCPort, "GRPC server listening port")
 	rootCmd.PersistentFlags().BoolVar(&cfg.GRPCHealthCheckEnabled, "grpc.healthcheck", false, "Enable GRPC health check")
+	rootCmd.PersistentFlags().BoolVar(&cfg.AllowUnprotectedTxs, "rpc.allow-unprotected-txs", false, "Allow for unprotected (non EIP155 signed) transactions to be submitted via RPC")
 
 	if err := rootCmd.MarkPersistentFlagFilename("rpc.accessList", "json"); err != nil {
 		panic(err)
