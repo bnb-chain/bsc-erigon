@@ -9,7 +9,7 @@ Erigon is an implementation of Ethereum (aka "Ethereum client"), on the efficien
 - [System Requirements](#system-requirements)
 - [Usage](#usage)
     + [Getting Started](#getting-started)
-    + [Testnets](#testnets)
+    + [BSC Testnet](#bsc-testnet-not-available-yet)
     + [Mining](#mining)
     + [Windows](#windows)
     + [GoDoc](https://godoc.org/github.com/ledgerwatch/erigon)
@@ -55,22 +55,24 @@ Usage
 ### Getting Started
 
 ```sh
-git clone --recurse-submodules -j8 https://github.com/ledgerwatch/erigon.git
+git clone --recurse-submodules -j8 https://github.com/binance-chain/bsc-erigon.git
 cd erigon
+git checkout bsc
 make erigon
-./build/bin/erigon
+./build/bin/erigon --datadir bsc-mainnet --chain bsc
 ```
 
-### Testnets
+### BSC Testnet (Not available yet)
 
 If you would like to give Erigon a try, but do not have spare 2Tb on your driver, a good option is to start syncing one
 of the public testnets, Görli. It syncs much quicker, and does not take so much disk space:
 
 ```sh
-git clone --recurse-submodules -j8 https://github.com/ledgerwatch/erigon.git
+git clone --recurse-submodules -j8 https://github.com/binance-chain/bsc-erigon.git
 cd erigon
+git checkout bsc
 make erigon
-./build/bin/erigon --datadir goerli --chain goerli
+./build/bin/erigon --datadir bsc-testnet --chain bsc-testnet
 ```
 
 Please note the `--datadir` option that allows you to store Erigon files in a non-default location, in this example,
